@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import pypandoc
 import os
 
-init_url = "https://novelfull.com/everyone-else-is-a-returnee/prologue-part-1.html"
-# chapters = []
-
+init_url = "https://novelfull.com/god-rank-upgrade-system/chapter-1.html"
+# chapters =             []
+                        
 # Recursively adds page content to chapters
 # Recursion ends when the next chapter button is disabled
 def save_chapter(url):
@@ -67,6 +67,7 @@ def save_as_epub():
 
 def init():
     save_chapter(init_url)
+    print("Finished writing to markdown, Start conversion to EPUB")
     save_as_epub()
 
 init()
