@@ -3,11 +3,9 @@ from bs4 import BeautifulSoup
 import pypandoc
 import os
 
-init_url = "https://novelfull.com/god-rank-upgrade-system/chapter-1.html"
-# chapters =             []
+init_url = input("Chapter 1 URL: ")
                         
-# Recursively adds page content to chapters
-# Recursion ends when the next chapter button is disabled
+# adds page content to chapters until the next chapter button is disabled
 def save_chapter(url):
     next_url = url
     
