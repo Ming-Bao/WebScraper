@@ -60,7 +60,7 @@ def save_as_epub():
     # Converts the markdown file into a epub using pandoc     
     output = pypandoc.convert_file("output.md", 'epub', outputfile="output.epub")
     assert output == ""
-    # os.remove('output.md')
+    os.remove('output.md')
     
 
 def init():
