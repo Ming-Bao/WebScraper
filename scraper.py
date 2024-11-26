@@ -4,7 +4,8 @@ import pypandoc
 import os
 
 init_url = input("Chapter 1 URL: ")
-                        
+title = input("Novel Title: ")
+
 # adds page content to chapters until the next chapter button is disabled
 def save_chapter(url):
     next_url = url
@@ -30,17 +31,20 @@ def save_chapter(url):
             # get title and write it
             title = soup.find('span', class_= 'chapter-text')
             print(title.text)
-            push_string.append('# ' + title.text + '\n\n')
+            push_string.append('# ' + title.text.replace('\n', '') + '\n\n')
             
             # push texts
             for p in paragraphs:
                 text = p.text
                 
                 # Don't push paragraphs that contains these
-                if "Translator:" not in text and "Editor:" not in text and text != "" and "Copyright NovelFull.Com. All Rights Reserved" not in text:
+                if "Translator:" not in text and "Editor:" not in text and text != "" and "Copyright NovelFull.Com. All Rights Reserved" and ".Org" not in text:
                     text = text.replace("<", "-")
                     text = text.replace(">", "-")
                     text = text.replace("~", "-")
+                    text = text.replace("###", "---")
+                    text = text.replace("&$", "&^")
+                    text.strip()
                     push_string.append(text + "\n\n")
             
             # Makes the first part of the chapter the title
@@ -58,9 +62,13 @@ def save_chapter(url):
 # Saves the book as an epub
 def save_as_epub():
     # Converts the markdown file into a epub using pandoc     
-    output = pypandoc.convert_file("output.md", 'epub', outputfile="output.epub")
+    output = pypandoc.convert_file("output.md", 
+                                   'epub', 
+                                   outputfile=f"{title}.epub",
+                                   extra_args=['--metadata', f'title="{title}"']
+                                  )
     assert output == ""
-    os.remove('output.md')
+    # os.remove('output.md')
     
 
 def init():
